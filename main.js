@@ -1,6 +1,7 @@
 
 
 //FUNCIONES
+
 const Mayor = (edad, admitir) => {
     if (edad >= 18) {
         admitir = true;
@@ -28,12 +29,13 @@ const Comprar = () => {
             case "campera":
                 cantidad++;
                 monto +=30000;
+                break;
             default:
                 alert("no ingreso un artículo valido");
                 break;
         }
         articulo = prompt("Para seguir comprando ingrese otro artículo. Si ya terminó ingrese `pagar`");
-        if(articulo === pagar){
+        if(articulo === "pagar"){
             alert(`Usted compró ${cantidad} artículos. El total de su factura es $ ${monto}. Gracias por su compra`);
         }
     }
