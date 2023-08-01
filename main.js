@@ -35,9 +35,11 @@ const Comprar = () => {
                 break;
         }
         articulo = prompt("Para seguir comprando ingrese otro artículo. Si ya terminó ingrese `pagar`");
-        if(articulo === "pagar"){
-            alert(`Usted compró ${cantidad} artículos. El total de su factura es $ ${monto}. Gracias por su compra`);
-        }
+    }
+    if(monto != 0){
+        alert(`Usted compró ${cantidad} artículo/s. El total de su factura es $ ${monto}. Gracias por su compra`);
+    }else {
+        alert("Gracias por visitar nuestra tienda")
     }
 }
 
