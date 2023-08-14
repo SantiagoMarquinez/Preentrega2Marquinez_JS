@@ -1,17 +1,25 @@
+//OBJETOS
 
+class Articulo{
+    constructor(item, precio, stock, foto){
+    this.item = item;
+    this.precio = precio;
+    this.stock = stock;
+    this.foto = foto;    }
+}
 
 //FUNCIONES
 
-const Mayor = (edad, admitir) => {
+const mayor = (edad, admitir) => {
     if (edad >= 18) {
-        admitir = true;
-        return admitir;
+        return true;
     } else {
-        return admitir;
+        return false;
     }
 }
 
-const Comprar = () => {
+
+const comprar = (productos) => {
     let cantidad = 0;
     let monto = 0;
     alert("usted puede compar camiseta, short o campera")
@@ -21,14 +29,29 @@ const Comprar = () => {
             case "camiseta":
                 cantidad++;
                 monto +=15000;
+                if (productos[0].stock > 0){
+                    productos[0].stock =productos[0].stock-1;
+                } else{
+                    alert("Producto fuera de stock, disculpe las molestias")
+                }
                 break;
             case "short":
                 cantidad++;
                 monto +=10000;
+                if (productos[1].stock>0){
+                    productos[1].stock =productos[1].stock-1;
+                } else{
+                    alert("Producto fuera de stock, disculpe las molestias")
+                }
                 break;
             case "campera":
                 cantidad++;
                 monto +=30000;
+                if (productos[2].stock>0){
+                    productos[0].stock =productos[0].stock-1;
+                } else{
+                    alert("Producto fuera de stock, disculpe las molestias")
+                }
                 break;
             default:
                 alert("no ingreso un artículo valido");
@@ -46,13 +69,19 @@ const Comprar = () => {
 
 
 // Algoritmo principal
+
+const productos = [];
+productos.push(new Articulo ("camiseta", 15000, 2, "camiseta.png" ));
+productos.push(new Articulo ("short", 10000, 2, "short.png" ));
+productos.push(new Articulo ("campera", 30000, 2, "campera.png" ));
+console.log(productos);
 let admitir = false;
 let edad = parseInt(prompt("Ingrese su edad"))
-const respuesta=Mayor(edad, admitir);
+const respuesta=mayor(edad, admitir);
 console.log(respuesta)
 if (respuesta == true) {
     alert("Bienvenido a la tienda");
-    Comprar();
+    comprar(productos);
 } else {
     alert("Usted no tiene edad para acceder a esta tienda");
 }
