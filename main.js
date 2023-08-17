@@ -36,6 +36,7 @@ function sumar (prod,carrito){
     return carrito;
 }
 
+
 const comprar = (productos,carrito) => {
     carrito = [];
     let vendidos = [];
@@ -51,7 +52,7 @@ const comprar = (productos,carrito) => {
                     vendidos.push(`camiseta`);
                     cantidad++;
                     monto +=15000;
-                    productos[0].stock =productos[0].stock-1;                
+                    productos[0].stock =productos[0].stock-1;               
                 }else if(productos[0].stock > 0){
                     productos[0].stock =productos[0].stock-1;
                     cantidad++;
@@ -61,26 +62,40 @@ const comprar = (productos,carrito) => {
                     }else{
                         alert("Producto fuera de stock, disculpe las molestias")
                         }
-                alert(vendidos);
-                alert(carrito[0].item + " " + carrito[0].precio);
                 break;
-            case "short":
-                cantidad++;
-                monto +=10000;
-                if (productos[1].stock>0){
-                    productos[1].stock =productos[1].stock-1;
-                } else{
-                    alert("Producto fuera de stock, disculpe las molestias")
-                }
-                break;
-            case "campera":
-                cantidad++;
-                monto +=30000;
-                if (productos[2].stock>0){
-                    productos[2].stock =productos[2].stock-1;
-                } else{
-                    alert("Producto fuera de stock, disculpe las molestias")
-                }
+                case "short":
+                    if(!vendidos.includes("short") && productos[1].stock>0) {
+                        carrito.push(new ArticuloVendido ("short", 10000,"short.png",1 ));
+                        vendidos.push(`short`);
+                        cantidad++;
+                        monto +=10000;
+                        productos[1].stock =productos[1].stock-1;                
+                    }else if(productos[1].stock > 0){
+                        productos[1].stock =productos[1].stock-1;
+                        cantidad++;
+                        monto +=10000;
+                        sumar ("short",carrito)
+                        alert ("se vendieron "+ carrito[1].ventas +"shorts")
+                        }else{
+                            alert("Producto fuera de stock, disculpe las molestias")
+                            }
+                    break;
+                case "campera":
+                if(!vendidos.includes("campera") && productos[2].stock>0) {
+                    carrito.push(new ArticuloVendido ("campera", 30000,"campera.png",1 ));//////////campera
+                    vendidos.push(`campera`);
+                    cantidad++;
+                    monto +=15000;
+                    productos[2].stock =productos[2].stock-1;                
+                }else if(productos[2].stock > 0){
+                    //productos[2].stock =productos[2].stock-1;
+                    cantidad++;
+                    monto +=15000;
+                    sumar ("campera",carrito)
+                    alert ("se vendieron "+ carrito[2].ventas +"camperas")
+                    }else{
+                        alert("Producto fuera de stock, disculpe las molestias")
+                        }
                 break;
             default:
                 alert("no ingreso un artículo valido");
@@ -89,6 +104,7 @@ const comprar = (productos,carrito) => {
         articulo = prompt("Para seguir comprando ingrese otro artículo. Si ya terminó ingrese `pagar`");
     }
     if(monto != 0){
+        alert(vendidos)
         alert(`Usted compró ${cantidad} artículo/s. El total de su factura es $ ${monto}. Gracias por su compra`);
     }else {
         alert("Gracias por visitar nuestra tienda")
