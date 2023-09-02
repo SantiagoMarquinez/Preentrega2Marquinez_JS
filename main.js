@@ -11,7 +11,7 @@ class Articulo {
 // Función para vaciar el carrito
 function vaciarCarrito(carrito) {
     carrito.length = 0; // Esto elimina todos los elementos del arreglo
-    localStorage.removeItem("carrito"); // También puedes quitar el carrito del almacenamiento local si lo deseas
+    localStorage.removeItem("carrito"); // Sacar el carrito del almacenamiento local si lo deseas
     cart(carrito); // Llama nuevamente a la función cart para actualizar la vista del carrito
 }
 
@@ -51,7 +51,7 @@ function cart(carrito) {
         }
     const montoCompra = document.createElement("p");
     montoCompra.classList.add("parrafoMonto");
-    montoCompra.innerHTML = `Monto de la compra: $0`; // Inicialmente, el monto es cero
+    montoCompra.innerHTML = `Monto de la compra: $0`; 
     divBotones.appendChild(montoCompra);
 
     function calcularMontoCompra() {
@@ -68,9 +68,17 @@ function cart(carrito) {
 
     const botonVaciarCarrito = document.createElement("button");
     botonVaciarCarrito.textContent = "Vaciar Carrito";
-    botonVaciarCarrito.classList.add("btn", "botonVaciar", "botonVaciarCarrito");
+    botonVaciarCarrito.classList.add("btn", "botonVaciar", "boton", "botonVaciarCarrito");
     divBotones.appendChild(botonVaciarCarrito);    
     botonVaciarCarrito.addEventListener("click", () => vaciarCarrito(carrito));
+
+    const botonRecargarPagina = document.createElement("button");
+    botonRecargarPagina.textContent = "Volver";
+    botonRecargarPagina.classList.add("btn", "btn-primary","botonPagar", "botonRecargarPagina");
+    divBotones.appendChild(botonRecargarPagina);
+
+    botonRecargarPagina.addEventListener("click", () => location.reload());
+
     contenedorProductos.appendChild(divBotones);        
 }
 
@@ -95,7 +103,11 @@ function cargarProductos(productos) {
         }
     }
     contenedorProductos.innerHTML = "";
-
+    const contBotonCarrito = document.createElement("div");
+    contBotonCarrito.innerHTML =`
+    <button name="button" class="btn btn-primary boton botonCarrito">Carrito</button>
+    `;
+    contenedorProductos.append(contBotonCarrito);
     productos.forEach(producto => {
         const div = document.createElement("div");
         div.classList.add("tarjeta");
@@ -114,11 +126,6 @@ function cargarProductos(productos) {
 
         contenedorProductos.append(div);
     });
-    const contBotonCarrito = document.createElement("div");
-    contBotonCarrito.innerHTML =`
-    <button name="button" class="btn btn-primary boton botonCarrito">Carrito</button>
-    `;
-    contenedorProductos.append(contBotonCarrito);
     contBotonCarrito.addEventListener("click", () => cart(carrito));
 
 }
@@ -134,9 +141,13 @@ document.body.className = "fondo";
 
 const contenedorProductos = document.querySelector(".vidriera");
 const productos = [];
-productos.push(new Articulo("camiseta", 15000, 30, "./images/camiseta.webp"));
-productos.push(new Articulo("short", 10000, 43, "./images/short.webp"));
-productos.push(new Articulo("campera", 30000, 15, "./images/campera.png"));
+productos.push(new Articulo("Camiseta", 34000, 30, "./images/camiseta.webp"));
+productos.push(new Articulo("Camiseta alternativa negra", 33000, 43, "./images/camisetaNegra.png"));
+productos.push(new Articulo("Camiseta alternativa Blanca", 34000, 43, "./images/camisetaBlanca.png"));
+productos.push(new Articulo("Short", 22000, 43, "./images/short.webp"));
+productos.push(new Articulo("Short alternativo", 21000, 43, "./images/shortNegro.png"));
+productos.push(new Articulo("Camperón", 80000, 43, "./images/camperon.jpg"));
+productos.push(new Articulo("Campera", 30000, 15, "./images/campera.png"));
 cargarProductos(productos);
 
 
