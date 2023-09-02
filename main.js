@@ -58,7 +58,7 @@ function sumar(prod, carrito){
 
 const comprar = (carrito) => {
     carrito = [];
-    let artVendido = [];
+    const artVendido = [];
     let cantidad = 0;
     let monto = 0;
     alert("usted puede compar camiseta, short o campera");
@@ -105,16 +105,25 @@ const comprar = (carrito) => {
 
 // Algoritmo principal
 
+let header = document.querySelector("header");
+let h1 = document.createElement("h1");
+h1.textContent = "Bienvenido a la tienda";
+header.appendChild(h1);
+h1.classList.add("encabezado");
+
+document.body.className = "fondo";
+// const body= document.querySelector(".fondo");
+// body.classList.add ("probando")
 const productos = [];
-productos.push(new Articulo ("camiseta", 15000, 30, "camiseta.png" ));
-productos.push(new Articulo ("short", 10000, 43, "short.png" ));
-productos.push(new Articulo ("campera", 30000, 15, "campera.png" ));
+productos.push(new Articulo ("camiseta", 15000, 30, "./images/camiseta.webp" ));
+productos.push(new Articulo ("short", 10000, 43, "./images/short.webp" ));
+productos.push(new Articulo ("campera", 30000, 15, "./images/campera.png" ));
 let admitir = false;
 let edad = parseInt(prompt("Ingrese su edad"))
-let carrito = [];
+const carrito = [];
 const respuesta = mayor(edad, admitir);
 console.log(respuesta)
-if (respuesta == true) {
+if (respuesta) {
     alert("Bienvenido a la tienda");
     comprar(carrito);
 } else {
