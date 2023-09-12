@@ -1,0 +1,9 @@
+[
+    {"item": "Camiseta", "precio": 34000, "stock": 30, "foto":"./images/camiseta.webp"},    
+    {"item": "Camiseta alternativa blanca", "precio": 21000, "stock": 21, "foto":"./images/camisetaBlanca.png"},
+    {"item": "Camiseta alternativa negra", "precio": 33000, "stock": 35, "foto":"./images/camisetaNegra.png"},
+    {"item": "short", "precio": 22000, "stock": 43, "foto":"./images/short.webp"},
+    {"item": "short alternativo", "precio": 34000, "stock": 30, "foto":"./images/shortNegro.png"},
+    {"item": "Camperón", "precio": 80000, "stock": 15, "foto":"./images/camperon.jpg"},
+    {"item": "Campera", "precio": 34000, "stock": 30, "foto":"./images/campera.png"}
+]
