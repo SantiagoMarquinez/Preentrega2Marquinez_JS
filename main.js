@@ -10,10 +10,15 @@ class Articulo {
 
 // Función para vaciar el carrito
 function vaciarCarrito(carrito) {
-    carrito.length = 0; // Esto elimina todos los elementos del arreglo
+    carrito.length = 0; 
     localStorage.removeItem("carrito");
-    cart(carrito); // Llama nuevamente a la función cart para actualizar la vista del carrito
+    const montoCompra = document.querySelector(".parrafoMonto");
+    if (montoCompra) {
+        montoCompra.innerHTML = "Monto de la compra: $0";
+    }
+    cart([]);
 }
+
 
 function eliminarDelCarrito(carrito, index) {
     carrito.splice(index, 1); // Elimina el producto del carrito en el índice especificado
@@ -25,6 +30,7 @@ function eliminarDelCarrito(carrito, index) {
 function pagar() {
 
     if (localStorage.length>0){
+        localStorage.removeItem("carrito");
         Toastify({
             text: "Su pago fue realizado con éxito. Gracias por su compra.",
             duration: 2000,
@@ -59,7 +65,7 @@ function pagar() {
 
 function cart(carrito) {
     const divBotones = document.getElementById("botonesCarro");
-     // Elimina el contenido del botón "Carrito" si estamos en el carrito
+    // Elimina el contenido del botón "Carrito" si estamos en el carrito
     if (carritoVisible) {
         contBotonCarrito.innerHTML = '';
     }
@@ -70,14 +76,6 @@ function cart(carrito) {
         montoCompra.classList.add("parrafoMonto");
         montoCompra.innerHTML = `Monto de la compra: $0`;
         divBotones.appendChild(montoCompra);
-
-        // Calcula y muestra el monto de la compra
-        function calcularMontoCompra() {
-            const total = carrito.reduce((acc, producto) => acc + producto.precio, 0);
-            montoCompra.innerHTML = `Monto de la compra: $${total}`;
-        };
-
-        calcularMontoCompra();
 
         const botonPagar = document.createElement("button");
         botonPagar.textContent = "Pagar";
@@ -119,10 +117,17 @@ function cart(carrito) {
             contenedorProductos.appendChild(div);
             localStorage.setItem("carrito", JSON.stringify(carrito));
         });
+
+        // Calcula y muestra el monto de la compra después de renderizar los productos
+        calcularMontoCompra();
     } else {
         contenedorProductos.innerHTML = `
             <h2 class="encabezado">Lo siento, no hay productos en el carrito</h2>
             `;
+
+        // Actualiza el monto de la compra a $0 si el carrito está vacío
+        const montoCompra = document.querySelector(".parrafoMonto");
+        montoCompra.innerHTML = "Monto de la compra: $0";
     }
 }
 
@@ -167,20 +172,20 @@ function cargarProductos() {
                 `;
             }
 
-            data.forEach((producto) => {
+            data.forEach(({ item, precio, foto }) => {
                 const div = document.createElement("div");
                 div.classList.add("tarjeta");
                 div.innerHTML = `
-                    <img src="${producto.foto}" alt="${producto.item}" class="card-img-top imagen">
+                    <img src="${foto}" alt="${item}" class="card-img-top imagen">
                     <div class="card-body">
-                        <h5 class="card-title">${producto.item}</h5>
-                        <h6 class="card-text">$${producto.precio}</h6>
+                        <h5 class="card-title">${item}</h5>
+                        <h6 class="card-text">$${precio}</h6>
                         <button name="button" class="btn btn-primary boton">Agregar al carrito</button>
                     </div>
                 `;
 
                 const botonAgregar = div.querySelector(".boton");
-                botonAgregar.addEventListener("click", () => agregarAlCarrito(carrito, producto));
+                botonAgregar.addEventListener("click", () => agregarAlCarrito(carrito, { item, precio, foto }));
 
                 contenedorProductos.append(div);
             });
