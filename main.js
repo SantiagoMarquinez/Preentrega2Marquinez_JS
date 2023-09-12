@@ -201,6 +201,7 @@ function cargarProductos() {
 }
 
 // Algoritmo principal
+let carrito = [];
 const header = document.querySelector("header");
 let carritoVisible = false;
 let h1 = document.createElement("h1");
