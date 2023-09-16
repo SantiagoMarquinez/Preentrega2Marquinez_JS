@@ -147,6 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             onClick: function () { } // Callback after click
         }).showToast();
+        calcularMontoCompra()
+        montoCompra.innerHTML = `Monto de la compra: $${total}`;
     }
 
 
@@ -206,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Algoritmo principal
-    let carrito = [];
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     let montoCompra;
     const header = document.querySelector("header");
     let carritoVisible = false;
@@ -219,6 +221,5 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.className = "fondo";
 
     const contenedorProductos = document.querySelector(".vidriera");
-    //const productos = [];
     cargarProductos();
 });
