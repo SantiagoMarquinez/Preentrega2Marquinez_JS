@@ -1,13 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     //funciones
-    class Articulo {
-        constructor(item, precio, stock, foto) {
-            this.item = item;
-            this.precio = precio;
-            this.stock = stock;
-            this.foto = foto;
-        }
-    }
+
 
     // Función para vaciar el carrito
     function vaciarCarrito(carrito) {
@@ -23,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function eliminarDelCarrito(carrito, index) {
         carrito.splice(index, 1); // Elimina el producto del carrito en el índice especificado
-        localStorage.setItem("carrito", JSON.stringify(carrito)); // Actualiza el carrito en el almacenamiento local
+        localStorage.setItem("carrito", JSON.stringify(carrito)); // Actualiza el carrito en local storage
         cart(carrito); // Vuelve a renderizar el carrito para reflejar los cambios
     }
 
@@ -31,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function pagar() {
 
         if (localStorage.length > 0) {
-            localStorage.removeItem("carrito");
+            localStorage.removeItem("carrito"); // Elimina los elementos del carrito en el local storage
             Toastify({
                 text: "Su pago fue realizado con éxito. Gracias por su compra.",
                 duration: 2000,
@@ -45,9 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 onClick: function () { }
             }).showToast();
-        } else {
+        } else {//mensaje de error para cuando el carrito esta vacio
             Toastify({
-                text: "Su carrito esta vacio. No es posible realizar el pago",
+                text: "Su carrito esta vacio. No es posible realizar el pago", 
                 duration: 2000,
                 newWindow: true,
                 close: true,
@@ -69,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Elimina el contenido del botón "Carrito" si estamos en el carrito
         if (carritoVisible) {
             contBotonCarrito.innerHTML = '';
+            h1.innerHTML = "Carrito ";
         }
 
         // Verifica si los botones ya existen en el DOM antes de crearlos nuevamente
@@ -80,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const botonPagar = document.createElement("button");
             botonPagar.textContent = "Pagar";
-            botonPagar.classList.add("btn", "btn-success", "botonPagar");
+            botonPagar.classList.add("btn", "boton", "btn-primary", "botonPagar");
             divBotones.appendChild(botonPagar);
             botonPagar.addEventListener("click", () => {
                 pagar();
@@ -93,8 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
             botonVaciarCarrito.addEventListener("click", () => vaciarCarrito(carrito));
 
             const botonRecargarPagina = document.createElement("button");
-            botonRecargarPagina.textContent = "Volver";
-            botonRecargarPagina.classList.add("btn", "btn-primary", "botonPagar", "botonRecargarPagina");
+            botonRecargarPagina.textContent = "Tienda";
+            botonRecargarPagina.classList.add("btn", "btn-primary", "boton", "botonPagar", "botonRecargarPagina");
             divBotones.appendChild(botonRecargarPagina);
             botonRecargarPagina.addEventListener("click", () => location.reload());
         }
@@ -108,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="card-body">
             <h5 class="card-title">${item}</h5>
             <h6 class="card-text">$${precio}</h6>
-            <button class="btn btn-danger eliminar" data-index="${index}">Eliminar</button>
+            <button class="btn btn-primary boton eliminar" data-index="${index}">Eliminar</button>
             </div>
             `;
 
@@ -126,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <h2 class="encabezado">Lo siento, no hay productos en el carrito</h2>
             `;
 
-            // Actualiza el monto de la compra a $0 si el carrito está vacío
+            // Actualiza el monto de la compra a $0 si el carrito esta vacio
             const montoCompra = document.querySelector(".parrafoMonto");
             montoCompra.innerHTML = "Monto de la compra: $0";
         }
@@ -147,8 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             onClick: function () { }
         }).showToast();
-        // calcularMontoCompra()
-        // montoCompra.innerHTML = `Monto de la compra: $${total}`;
     }
 
 
@@ -165,7 +157,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((response) => response.json())
             .then((data) => {
                 const carritoGuardado = JSON.parse(localStorage.getItem("carrito"));
-                const carrito = carritoGuardado || [];
                 contenedorProductos.innerHTML = "";
 
                 if (!carritoVisible) {
@@ -207,9 +198,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let montoCompra;
     const header = document.querySelector("header");
     let carritoVisible = false;
+    const tituloDiv = document.getElementById("titulo");
     let h1 = document.createElement("h1");
     h1.innerHTML = "Bienvenido a la tienda";
-    header.appendChild(h1);
+    tituloDiv.appendChild(h1);
     h1.classList.add("encabezado");
     const contBotonCarrito = document.getElementById("botonHeader");
 
